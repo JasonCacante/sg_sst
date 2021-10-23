@@ -1,0 +1,34 @@
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+.bd-placeholder-img {
+	font-size: 1.125rem;
+	text-anchor: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+}
+
+@media (min-width: 768px) {
+	.bd-placeholder-img-lg {
+		font-size: 3.5rem;
+	}
+}
+
+main > .container {
+	padding: 60px 15px 0;
+	text-align: center;
+	margin-top: 5em;
+}
+
+main > .inicio {
+	padding: 30px 15px 0;
+	text-align: center;
+	margin-top: 1em;
+}
+footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 90px;
+}
