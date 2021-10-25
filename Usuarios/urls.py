@@ -4,5 +4,5 @@ from Usuarios.views import (
 )
 
 urlpatterns = [
-    path("", loginView, name="loginView"),
+    path("", loginView, name="usuarios"),
 ]
