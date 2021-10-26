@@ -4,7 +4,7 @@ from Usuarios.models import Login, Rol
 from .forms import LoginForm
 
 def login_view(request):
-    if request.method == 'POST':
+    """ if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
             # Form data is valid
@@ -19,6 +19,8 @@ def login_view(request):
                 rol = Rol.objects.get(id_rol=usuario.id_rol_id)
                 if rol.nombre_rol == "admin":
                     return render(request, "Usuarios/inicio.html", {"rola": username, "password": password})
+                elif rol.nombre_rol == "presiente":
+                    return render(request, "Usuarios/inicio.html", {"rola": username, "password": password})
                 else: 
                     return render(request, "Usuarios/login.html", {"rola": username, "password": password})
             else:
@@ -26,7 +28,7 @@ def login_view(request):
                 return redirect("usuarios")
         else:
             message = "Intentelo de nuevo, campos inválidos"
-    else:
-        form = LoginForm()
-        message = "Método Get"
+    else:"""
+    form = LoginForm()
+    message = "Método Get" 
     return render(request, 'Usuarios/login.html', { "form": form, "message": message})
