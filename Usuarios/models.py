@@ -89,8 +89,9 @@ class Rol(models.Model):
     roles = [
         ('Admin', 'Administrador'),
         ('Encar', 'Encargado del SG-SST'),
-        ('Presi', 'Presidente Comité'),
-        ('Secre', 'Secretario Comité'),
+        ('Pres1', 'Presidente Comité COCOLA'),
+        ('Pres2', 'Presidente Comité COPASST'),
+        ('Pres3', 'Secretario Comité BE'),
     ]
     nombre_rol=models.CharField(max_length=50, choices=roles, verbose_name="Nombre Rol")
     descripcion=models.TextField(verbose_name="Descripción")
