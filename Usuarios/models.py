@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Area(models.Model):
@@ -52,7 +53,7 @@ class Empleado(models.Model):
         )
 
     class Meta:
-        verbose_name  = "empleados" 
+        verbose_name  = "empleado"
         verbose_name_plural = "empleados" 
 
 
@@ -101,22 +102,16 @@ class Rol(models.Model):
         )
 
     class Meta:
-            verbose_name  = "rol" 
-            verbose_name_plural = "roles"
+        verbose_name  = "rol" 
+        verbose_name_plural = "roles"
 
 
-class Login(models.Model):
-    user=models.CharField(max_length=50, verbose_name="Nombre Usuario")
-    password=models.CharField(max_length=50, verbose_name="Contraseña")
-
-    def __str__(self):
-        return(
-            f"{self.user}"
-        )
+class Login(User):
 
     class Meta:
-            verbose_name  = "credencial" 
-            verbose_name_plural = "credenciales"
+        proxy = True
+        verbose_name  = "credencial" 
+        verbose_name_plural = "credenciales"
 
 
 class UsuarioSGSST(models.Model):

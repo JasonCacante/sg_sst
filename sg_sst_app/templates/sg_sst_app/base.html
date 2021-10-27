@@ -36,11 +36,11 @@
 					<div class="collapse navbar-collapse" id="navbarCollapse">
 						<ul class="navbar-nav me-auto mb-2 mb-md-0">
 							<li class="nav-item">
-								<a class="nav-link {% if request.path == '/usuarios/' %} active {% endif %}" aria-current="page" href="{% url 'usuarios' %}">Ingresar</a>
+								<a class="nav-link {% if request.path == '/usuarios/login/' %} active {% endif %}" aria-current="page" href="{% url 'login' %}">Ingresar</a>
 							</li>
-							{% if rola %}
+							{% if request.user.is_authenticated %}
 								<li class="nav-item">
-									<a class="nav-link" href="{% url 'home' %}">Salir</a>
+									<a class="nav-link" {% if request.path == '/usuarios/logout/' %} active {% endif %}href="{% url 'logout' %}">Salir</a>
 								</li>
 							{% endif %}
 							<li class="nav-item">

@@ -1,6 +1,8 @@
 from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from Usuarios.models import Login, Rol
+from Usuarios.models import Rol, Login
 from .forms import LoginForm
 
 def login_view(request):
@@ -9,13 +11,10 @@ def login_view(request):
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            try:
-                usuario = Login.objects.get(user=username)
-            except Login.DoesNotExist:
-                messages.error(request, "El usuario no existe, intentalo de nuevo o contacta al administrador")
-                return redirect("usuarios")
-            if password == usuario.password:
+            usuario = authenticate(username=username, password=password)
+            if usuario is not None:
                 rol = Rol.objects.get(usuariosgsst__id_login=usuario.id) #Esto trae el rol de la tabla usuariossgsst
+                login(request, usuario)
                 if rol.nombre_rol == "Admin":
                     return render(request, "Usuarios/inicio.html", {"rola": username, "password": password})
                 elif rol.nombre_rol == "presiente":
@@ -23,11 +22,16 @@ def login_view(request):
                 else: 
                     return render(request, "Usuarios/login.html", {"rola": username, "password": password})
             else:
-                messages.error(request, "La contraseña no corresponde con el usuario ingresado")
+                messages.error(request, "Usuario o Contraseña erróneas, intentalo de nuevo")
                 return redirect("usuarios")
         else:
             message = "Intentelo de nuevo, campos inválidos"
     else:
         form = LoginForm()
-        message = "Método Get" 
+        message = "Método Get"
     return render(request, 'Usuarios/login.html', { "form": form, "message": message})
+
+@login_required
+def salir(request):
+    logout(request)
+    return redirect('home')
