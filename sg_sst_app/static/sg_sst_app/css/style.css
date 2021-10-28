@@ -25,7 +25,7 @@
 
 .loginForm {
 	text-align: center;
-	width: 50%;
+	width: 80%;
 	margin: 2em auto;
 	border-radius: 10px;
 	padding: 1px 50px
@@ -33,5 +33,16 @@
 
 .loginForm input {
 	margin: 0.5em;
-	
+}
+
+.createForm {
+	text-align: center;
+	width: 100%;
+	margin: 0.1em auto;
+	border-radius: 10px;
+	padding: 1px 0px 1px 0px;
+}
+
+.createForm input {
+	margin: 0.5em 0;
 }

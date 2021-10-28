@@ -6,14 +6,13 @@
 	<p class="lead">
 		A continuación puede realizar la gestión de sus usuarios:
     <div class="container" style="align-items: flex-start;">
-      <button type="button" class="btn btn-dark btn-lg" id="crear_usuario" onclick="location.href='{% url 'nuevos' %}'">Crear usuario</button>
+      <a href="{% url 'nuevos' %}" class="btn btn-dark btn-lg ">Crear usuario</a>
     </div>
     <table class="table table-striped">
       <thead>
         <tr>
           <th scope="col">#</th>
           <th scope="col">Nombre de Usuario</th>
-          <th scope="col">Email</th>
           <th scope="col">Nombre</th>
           <th scope="col">Apellidos</th>
         </tr>
@@ -23,7 +22,6 @@
         <tr>
           <th scope="row">{{ usuario.id }}</th>
           <td>{{usuario.username}}</td>
-          <td>{{usuario.email}}</td>
           <td>{{usuario.first_name}}</td>
           <td>{{usuario.last_name}}</td>
         </tr>
