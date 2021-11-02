@@ -11,7 +11,3 @@ function editarUsuario(fila){
     const  usuario = fila.cells[0].innerHTML;
     window.location = `${usuario}`;
 }
-
-function borrarUsuario(id){
-    window.location = `${borrar/id}`;
-}

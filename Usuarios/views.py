@@ -6,6 +6,7 @@ from Usuarios.models import Rol, Login, Empleado, UsuarioSGSST
 from .forms import LoginForm, CreateUserForm
 from django.contrib.auth.hashers import make_password
 
+
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -159,3 +160,4 @@ def delete_user(request, id):
     login = Login.objects.get(id=str(id))
     login.delete()
     return redirect('usuarios')
+
