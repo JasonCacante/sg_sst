@@ -1,0 +1,34 @@
+{% extends 'sg_sst_app/base.html' %} 
+{% load static %}
+{% block content %}
+  <div class=" container">
+    <h2 class="mt-5"> Estás seguro de borrar este usuario: </h2>
+    <p class="lead">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre de Usuario</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellidos</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% if usuario %}
+          <tr role="button" >
+            <th scope="row">{{ usuario.id }}</th>
+            <td>{{usuario.username}}</td>
+            <td>{{usuario.first_name}}</td>
+            <td>{{usuario.last_name}}</td>
+          </tr>
+        {% endif %}
+        <tr>
+          <a class="btn btn-danger btn-sm" aria-current="page" href="{% url 'Usuarios.views.delete_user' id=job.id %}"" >Borrar</a>
+        </tr>
+        </tbody>
+
+      </table>
+    </p>
+</div>
+{% endblock%}
+

@@ -1,4 +1,3 @@
-from django.forms.widgets import PasswordInput
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
@@ -14,7 +13,6 @@ def login_view(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             usuario = authenticate(username=username, password=password)
-            print(usuario)
             if usuario is not None:
                 rol = Rol.objects.get(usuariosgsst__id_login=usuario.id) #Esto trae el rol de la tabla usuariossgsst
                 nombre_rol = rol.nombre_rol
@@ -23,23 +21,23 @@ def login_view(request):
                     return redirect('usuarios')
                 elif nombre_rol == "Encar":
                     return redirect('home')
-                elif nombre_rol == "Pres1":
-                    return render(request, "Usuarios/inicio.html", {"rola": username, "password": password})
+                elif nombre_rol == "Pres    1":
+                    return render(request, "Usuarios/inicio.html")
                 elif nombre_rol == "Pres2":
-                    return render(request, "Usuarios/inicio.html", {"rola": username, "password": password})
+                    return render(request, "Usuarios/inicio.html")
                 elif nombre_rol == "Pres3":
-                    return render(request, "Usuarios/inicio.html", {"rola": username, "password": password})
+                    return render(request, "Usuarios/inicio.html")
                 else: 
-                    return render(request, "Usuarios/login.html", {"rola": username, "password": password})
+                    return render(request, "Usuarios/login.html")
             else:
                 messages.error(request, "Usuario o Contraseña erróneas, intentalo de nuevo")
                 return redirect("login")
         else:
-            message = "Intentelo de nuevo, campos inválidos"
+            messages.error(request, "Intentelo de nuevo, campos inválidos")
+            return redirect("login")
     else:
         form = LoginForm()
-        message = "Método get"
-    return render(request, 'Usuarios/login.html', { "form": form, "message": message})
+    return render(request, 'Usuarios/login.html', { "form": form })
 
 
 @login_required
@@ -50,15 +48,20 @@ def salir(request):
 
 @login_required
 def show_users(request):
-    usuarios = Login.objects.all()
-    return render(request, 'Usuarios/inicio.html', { 'usuarios': usuarios })
+    usuario_id = request.user.id
+    rol = Rol.objects.get(usuariosgsst__id_login=usuario_id)
+    nombre_rol = rol.nombre_rol
+    if nombre_rol == "Admin":
+        usuarios = Login.objects.all()
+        return render(request, 'Usuarios/inicio.html', { 'usuarios': usuarios })
+    else:
+        return redirect('home')
 
 
 @login_required
-def create_user(request):
+def edit_user(request,id):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
-        print(form)
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
@@ -67,11 +70,65 @@ def create_user(request):
             empleado = Empleado.objects.get(id=id_empleado)
             first_name = empleado.nombre1_emp
             last_name = empleado.apellido1_emp + " " + empleado.apellido2_emp
+
+            login = Login.objects.get(id=str(id))
+            login.username = username
+            login.set_password(make_password(password))
+            login.first_name = first_name
+            login.last_name = last_name
+            login.save()
+
+            rol = Rol.objects.get(id=id_rol)
+
+            usuario = UsuarioSGSST.objects.get(id_login=login)
+            usuario.id_rol = rol
+            usuario.id_empleado = empleado
+            usuario.save()
+        else:
+            messages.error(request, "Tienes que seleccionar todos los campos. Intentalo de nuevo")
+        return redirect('usuarios')
+    else:
+        form = CreateUserForm(request.GET)
+        login = Login.objects.get(id=str(id))
+        form.fields['username'].widget.attrs['placeholder']=login.username
+        rol = Rol.objects.get(usuariosgsst__id_login=str(id))
+        empleado = Empleado.objects.get(usuariosgsst__id_login=str(id))
+        empleados = Empleado.objects.all()
+        roles = Rol.objects.all()
+        ctx = {
+            "form": form,
+            "empleado": empleado,
+            "rol": rol,
+            "login": login,
+            "roles": roles,
+            "empleados": empleados,
+        }
+        return render(request, 'Usuarios/editar.html', ctx)
+
+
+@login_required
+def create_user(request):
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            nombre_usuario = Login.objects.filter(username=username)
+
+            if nombre_usuario:
+                messages.error(request, "El nombre usuario ya existe, ingresa otro")
+                return redirect('nuevo')
+
+            password = form.cleaned_data['password']
+            id_empleado = form.cleaned_data['id_empleado']
+            id_rol = form.cleaned_data['id_rol']
+            empleado = Empleado.objects.get(id=id_empleado)
+            first_name = empleado.nombre1_emp
+            last_name = empleado.apellido1_emp + " " + empleado.apellido2_emp
             login = Login(
-                username=username, 
-                password=make_password(password), 
-                is_staff=False, 
-                first_name=first_name, 
+                username=username,
+                password=make_password(password),
+                is_staff=False,
+                first_name=first_name,
                 last_name=last_name
             )
             login.save()
@@ -84,9 +141,9 @@ def create_user(request):
             usuario.save()
         else:
             messages.error(request, "Tienes que seleccionar todos los campos. Intentalo de nuevo")
-        return redirect('nuevos')
+        return redirect('nuevo')
     else:
-        form = CreateUserForm()
+        form = CreateUserForm(request.GET)
         empleados = Empleado.objects.all()
         roles = Rol.objects.all()
         ctx = {
@@ -95,3 +152,10 @@ def create_user(request):
             "roles": roles,
         }
         return render(request, 'Usuarios/crear_usuario.html', ctx)
+
+
+@login_required
+def delete_user(request, id):
+    login = Login.objects.get(id=str(id))
+    login.delete()
+    return redirect('usuarios')
