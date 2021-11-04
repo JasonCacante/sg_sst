@@ -21,7 +21,7 @@ def login_view(request):
                 if nombre_rol == "Admin":
                     return redirect('usuarios')
                 elif nombre_rol == "Encar":
-                    return redirect('home')
+                    return redirect('iniciodocs')
                 elif nombre_rol == "Pres    1":
                     return render(request, "Usuarios/inicio.html")
                 elif nombre_rol == "Pres2":
@@ -51,12 +51,8 @@ def salir(request):
 def show_users(request):
     usuario_id = request.user.id
     rol = Rol.objects.get(usuariosgsst__id_login=usuario_id)
-    nombre_rol = rol.nombre_rol
-    if nombre_rol == "Admin":
-        usuarios = Login.objects.all()
-        return render(request, 'Usuarios/inicio.html', { 'usuarios': usuarios })
-    else:
-        return redirect('home')
+    usuarios = Login.objects.all()
+    return render(request, 'Usuarios/inicio.html', { 'usuarios': usuarios, "rol": rol.nombre_rol })
 
 
 @login_required

@@ -46,6 +46,26 @@ class Empleado(models.Model):
     ]
     nivel_emp=models.CharField(max_length=12, choices=niveles_edu, verbose_name='Nivel de Educación')
     cargo_emp=models.ForeignKey(Cargo, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Cargo")
+    fecha_ing=models.DateField(verbose_name="Fecha de Ingreso",  blank=True, null=True)
+    fecha_nac=models.DateField(verbose_name="Fecha de Nacimiento",  blank=True, null=True)
+    edad_emp=models.IntegerField(verbose_name="Edad",  blank=True, null=True)
+    genero = [
+        ('M', 'Masculino'), 
+        ('F', 'Femenino'), 
+        ('O', 'Otro')
+    ]
+    genero_emp=models.CharField(max_length=1, choices=genero, verbose_name="Género",  blank=True, null=True)
+    tipo_sangre = [
+        ('O+', 'O Positivo'), ('O-', 'O Negativo'), ('A+', 'A Positivo'), ('A-', 'A Negativo'), ('B+', 'B Positivo'), ('B-', 'B Negativo'), ('AB+', 'AB Positivo'), ('AB-', 'AB Negativo')
+    ]
+    tipo_sangre_emp=models.CharField(max_length=3, choices=tipo_sangre, verbose_name="Tipo de Sangre",  blank=True, null=True)
+    turnos = [ 
+        ( 'Diurno', 'De 6:00 a las 20:00 horas' ), ( 'Nocturno', 'De 20:00 a las 6:00 horas' ), ( 'Mixto', 'De 6:00 a las 20:00 y de 20:00 a las 6:00 horas' ) 
+    ]
+    turno_emp=models.CharField(max_length=10, choices=turnos, verbose_name="Turno",  blank=True, null=True)
+    email_emp = models.EmailField(verbose_name="Correo Electrónico", blank=True, null=True)
+    barrio = models.CharField(max_length=50, verbose_name="Barrio", blank=True, null=True)
+    municipio = models.CharField(max_length=50, verbose_name="Municipio", blank=True, null=True)
 
     def __str__(self):
         return(
