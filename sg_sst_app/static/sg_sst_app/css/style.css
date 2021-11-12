@@ -46,3 +46,7 @@
 .createForm input {
 	margin: 0.5em 0;
 }
+
+#activo {
+	margin: 0 auto 1em auto;
+}

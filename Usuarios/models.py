@@ -58,6 +58,7 @@ class Empleado(models.Model):
     tipo_sangre = [
         ('O+', 'O Positivo'), ('O-', 'O Negativo'), ('A+', 'A Positivo'), ('A-', 'A Negativo'), ('B+', 'B Positivo'), ('B-', 'B Negativo'), ('AB+', 'AB Positivo'), ('AB-', 'AB Negativo')
     ]
+
     tipo_sangre_emp=models.CharField(max_length=3, choices=tipo_sangre, verbose_name="Tipo de Sangre",  blank=True, null=True)
     turnos = [ 
         ( 'Diurno', 'De 6:00 a las 20:00 horas' ), ( 'Nocturno', 'De 20:00 a las 6:00 horas' ), ( 'Mixto', 'De 6:00 a las 20:00 y de 20:00 a las 6:00 horas' ) 
