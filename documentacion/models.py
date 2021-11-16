@@ -35,6 +35,7 @@ class DocsEmpleado(models.Model):
 
 class DocsEmpresa(models.Model):
     nombre = models.CharField(max_length=100, verbose_name="Nombre de Archivo")
+    documento = models.FileField(upload_to='docsempresa', verbose_name="Documento", blank=True, null=True)
     fecha_vencimiento = models.DateField(verbose_name="Fecha de vencimiento")
     tipo_doc = models.ForeignKey(TipoDoc, on_delete=models.CASCADE, verbose_name="Tipo de documento")
     activo = models.BooleanField(default=True, verbose_name="Activo")

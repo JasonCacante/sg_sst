@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 <div class=" container">
-  <h2 class="mt-5"> Cargar Documentos Empleado </h2>
+  <h2 class="mt-5"> Cargar Documentos Empresa </h2>
   <br>
   <p class="lead">
   {% if messages %}
@@ -22,8 +22,15 @@
         {{ form.tipo_doc }}
       </div>
       <div class="form-group">
-        {{ form.empleado }}
+        {{ form.titulo }}
       </div>
+      <div class="form-group">
+        {{ form.descripcion }}
+      </div>
+      <div class="form-group">
+        {{ form.firma }}
+      </div>
+
       <div class="form-group">
         {{ form.observaciones }}
       </div>
