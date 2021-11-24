@@ -21,5 +21,6 @@ urlpatterns = [
     path('', include('sg_sst_app.urls')),
     path('usuarios/', include('Usuarios.urls')),
     path('docs/', include('documentacion.urls')),
+    path('empleados/', include('empleados.urls')),
 
 ]

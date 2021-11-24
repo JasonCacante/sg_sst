@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'Usuarios',
     'sg_sst_app',
     'documentacion',
+    'empleados',
 ]
 
 MIDDLEWARE = [

@@ -45,6 +45,9 @@
 									<li class="nav-item">
 										<a class="nav-link {% if request.path == '/usuarios/' %} active {% endif %}" href="{% url 'usuarios' %}">Usuarios</a>
 									</li>
+									<li class="nav-item">
+										<a class="nav-link {% if request.path == '/empleados/' %} active {% endif %}" href="{% url 'empleados' %}">Empleados</a>
+									</li>
 								{% elif rol == "Encar" %}
 									<li class="nav-item">
 										<a class="nav-link {% if request.path == '/docs/' %} active {% endif %}" href="{% url 'iniciodocs' %}">Documentos</a>

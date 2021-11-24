@@ -2,7 +2,8 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from Usuarios.models import Rol, Login, Empleado, UsuarioSGSST
+from Usuarios.models import Rol, Login, UsuarioSGSST
+from empleados.models import Empleado
 from .forms import LoginForm, CreateUserForm
 from django.contrib.auth.hashers import make_password
 
@@ -50,9 +51,10 @@ def salir(request):
 @login_required
 def show_users(request):
     usuario_id = request.user.id
-    rol = Rol.objects.get(usuariosgsst__id_login=usuario_id)
+    rol_name = Rol.objects.get(usuariosgsst__id_login=usuario_id).nombre_rol
+    
     usuarios = Login.objects.all()
-    return render(request, 'Usuarios/inicio.html', { 'usuarios': usuarios, "rol": rol.nombre_rol })
+    return render(request, 'Usuarios/inicio.html', { 'usuarios': usuarios, "rol": rol_name })
 
 
 @login_required
@@ -65,8 +67,8 @@ def edit_user(request,id):
             id_empleado = form.cleaned_data['id_empleado']
             id_rol = form.cleaned_data['id_rol']
             empleado = Empleado.objects.get(id=id_empleado)
-            first_name = empleado.nombre1_emp
-            last_name = empleado.apellido1_emp + " " + empleado.apellido2_emp
+            first_name = empleado.nombres
+            last_name = empleado.apellidos
 
             login = Login.objects.get(id=str(id))
             login.username = username
@@ -119,8 +121,8 @@ def create_user(request):
             id_empleado = form.cleaned_data['id_empleado']
             id_rol = form.cleaned_data['id_rol']
             empleado = Empleado.objects.get(id=id_empleado)
-            first_name = empleado.nombre1_emp
-            last_name = empleado.apellido1_emp + " " + empleado.apellido2_emp
+            first_name = empleado.nombres
+            last_name = empleado.apellidos
             login = Login(
                 username=username,
                 password=make_password(password),

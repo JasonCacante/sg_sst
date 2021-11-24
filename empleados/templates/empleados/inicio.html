@@ -1,0 +1,47 @@
+{% extends 'sg_sst_app/base.html' %} 
+{% load static %}
+{% block content %}
+  <div class=" container">
+    <h2 class="mt-5"> Bienvenid@ </h2>
+    <p class="lead">
+      A continuación puede realizar la gestión de sus empleados:
+      <div class="container" style="align-items: flex-start;">
+        <a href="{% url 'nuevo_emp' %}" class="btn btn-dark btn-lg ">Crear Empleado</a>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Identificación</th>
+            <th scope="col">Nombres</th>
+            <th scope="col">Apellidos</th>
+            <th scope="col">Cargo</th>
+            <th scope="col">Fecha de Ingreso</th>
+            <th scope="col">Turno</th>
+            <th scope="col">Celular</th>
+            <th scope="col">Email</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for emp in empleados %}
+          <tr role="button" id='clickable-row' onclick="editarUsuario(this)">
+              <th scope="row">{{ emp.id }}</th>
+              <td>{{emp.identificacion}}</td>
+              <td>{{emp.nombres}}</td>
+              <td>{{emp.apellidos}}</td>
+              <td>{{emp.cargo}}</td>
+              <td>{{emp.fecha_ingreso}}</td>
+              <td>{{emp.turno}}</td>
+              <td>{{emp.movil}}</td>
+              <td>{{emp.mail}}</td>
+              <td>
+                <a class="btn btn-danger btn-sm" aria-current="page" href="{% url 'delete_emp' emp.id %}">Borrar</a>
+              </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </p>
+</div>
+{% endblock%}
+

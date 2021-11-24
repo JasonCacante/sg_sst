@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from empleados.models import Empleado as Empleado2
 
 class Area(models.Model):
     areas=models.CharField(max_length=50, verbose_name="Areas")
@@ -139,7 +139,7 @@ class Login(User):
 class UsuarioSGSST(models.Model):
     id_rol=models.ForeignKey(Rol, on_delete=models.CASCADE, verbose_name="Rol")
     id_login=models.ForeignKey(Login, on_delete=models.CASCADE, verbose_name="Nombre de Usuario")
-    id_empleado=models.ForeignKey(Empleado, on_delete=models.CASCADE, verbose_name="Nombre Empleado")
+    id_empleado=models.ForeignKey(Empleado2, on_delete=models.CASCADE, verbose_name="Nombre Empleado")
 
     def __str__(self):
         return(
