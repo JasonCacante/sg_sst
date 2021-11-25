@@ -8,7 +8,7 @@
     <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="selEmpleado" onclick="crearUsuario()" >
         <option selected>Click para seleccionar</option>
         {% for emp in empleados %}
-            <option value="{{emp.id}}">{{emp.id}}: {{emp.nombre1_emp}} {{emp.apellido1_emp}}</option>
+            <option value="{{emp.id}}">{{emp.id}}: {{emp.nombres}} {{emp.apellidos}}</option>
         {% endfor %}
     </select>
 	<h4 class="mt-3"> Seleccione un Rol </h4>

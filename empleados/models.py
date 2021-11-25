@@ -84,7 +84,7 @@ class Empleado(models.Model) :
     fecha_creacion = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.id) + ": " + self.nombres + ' ' + self.apellidos
+        return (f"{self.id} : {self.nombres} {self.apellidos}")
 
     class Meta:
         verbose_name = "Empleado"

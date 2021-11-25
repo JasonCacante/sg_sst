@@ -107,6 +107,8 @@ def edit_user(request,id):
 
 @login_required
 def create_user(request):
+    usuario_id = request.user.id
+    rol = Rol.objects.get(usuariosgsst__id_login=usuario_id).nombre_rol
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
@@ -149,6 +151,7 @@ def create_user(request):
             "form": form,
             "empleados": empleados,
             "roles": roles,
+            "rol": rol,
         }
         return render(request, 'Usuarios/crear_usuario.html', ctx)
 
