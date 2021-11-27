@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'sg_sst_app',
     'documentacion',
     'empleados',
+    'proveedores',
 ]
 
 MIDDLEWARE = [
